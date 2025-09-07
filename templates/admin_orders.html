@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block content %}
+  <div class="container">
+    <h2>All Orders (Admin)</h2>
+    {% if orders %}
+      <table border="1">
+        <tr>
+          <th>User</th>
+          <th>Product</th>
+          <th>Qty</th>
+          <th>Address</th>
+          <th>Status</th>
+          <th>Change Status</th>
+        </tr>
+        {% for order in orders %}
+        <tr>
+          <td>{{ order.user.username }}</td>
+          <td>{{ order.product.name }}</td>
+          <td>{{ order.quantity }}</td>
+          <td>{{ order.address }}</td>
+          <td>{{ order.status }}</td>
+          <td>
+            <form method="POST" action="{% url 'update_order_status' order.id %}">
+              {% csrf_token %}
+              <select name="status">
+                <option value="Pending" {% if order.status == 'Pending' %}selected{% endif %}>Pending</option>
+                <option value="Shipped" {% if order.status == 'Shipped' %}selected{% endif %}>Shipped</option>
+                <option value="Delivered" {% if order.status == 'Delivered' %}selected{% endif %}>Delivered</option>
+              </select>
+              <button type="submit">Update</button>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </table>
+    {% else %}
+      <p>No orders available.</p>
+    {% endif %}
+  </div>
+{% endblock %}

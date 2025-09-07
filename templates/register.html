@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Register | My Store{% endblock %}
+
+{% block content %}
+<div class="card bg-white shadow-lg p-6 rounded-xl w-full max-w-md">
+    <h2 class="text-center text-2xl font-bold mb-6">Register</h2>
+
+    {% if messages %}
+        <div class="mb-4 p-3 bg-yellow-100 text-yellow-800 rounded">
+            {% for message in messages %}
+                <p class="mb-0">{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <form method="POST" class="space-y-4">
+        {% csrf_token %}
+        <div>
+            <label class="block text-sm font-medium">Username</label>
+            <input type="text" name="username" class="w-full border rounded-lg px-3 py-2 focus:ring focus:ring-green-200" placeholder="Enter username" required>
+        </div>
+        <div>
+            <label class="block text-sm font-medium">Email</label>
+            <input type="email" name="email" class="w-full border rounded-lg px-3 py-2 focus:ring focus:ring-green-200" placeholder="Enter email" required>
+        </div>
+        <div>
+            <label class="block text-sm font-medium">Password</label>
+            <input type="password" name="password1" class="w-full border rounded-lg px-3 py-2 focus:ring focus:ring-green-200" placeholder="Enter password" required>
+        </div>
+        <div>
+            <label class="block text-sm font-medium">Confirm Password</label>
+            <input type="password" name="password2" class="w-full border rounded-lg px-3 py-2 focus:ring focus:ring-green-200" placeholder="Confirm password" required>
+        </div>
+        <button type="submit" class="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700">Register</button>
+    </form>
+
+    <p class="mt-4 text-center">
+        Already have an account? <a href="{% url 'login' %}" class="text-blue-600 hover:underline">Login here</a>
+    </p>
+</div>
+{% endblock %}

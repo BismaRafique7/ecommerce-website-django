@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="max-w-4xl mx-auto py-8">
+    <h2 class="text-2xl font-bold mb-6">📦 My Orders</h2>
+
+    {% for order in orders %}
+        <div class="border p-4 mb-4 rounded">
+            <h3 class="font-semibold">Order #{{ order.id }} | {{ order.created_at }}</h3>
+            <p>Name: {{ order.name }} | Phone: {{ order.phone }}</p>
+            <p>Address: {{ order.address }}</p>
+
+            <ul class="mt-2">
+                {% for item in order.items.all %}
+                    <li>{{ item.product.name }} × {{ item.quantity }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% empty %}
+        <p>No orders yet.</p>
+    {% endfor %}
+</div>
+{% endblock %}

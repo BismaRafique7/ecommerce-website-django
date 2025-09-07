@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% block title %}Home - My Store{% endblock %}
+
+{% block content %}
+<h2>Our Products</h2>
+<div class="product-grid">
+    {% for product in products %}
+        <div class="product-card">
+            {% if product.sale_price %}
+                <span class="sale-badge">Sale</span>
+            {% endif %}
+            <a href="{% url 'product_detail' product.id %}">
+                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+            </a>
+            <h3 class="product-name">{{ product.name }}</h3>
+            
+            {% if product.sale_price %}
+                <p>
+                    <span class="old-price">Rs. {{ product.price }}</span>
+                    <span class="sale-price">Rs. {{ product.sale_price }}</span>
+                </p>
+            {% else %}
+                <p>Rs. {{ product.price }}</p>
+            {% endif %}
+            
+            <a class="btn" href="{% url 'add_to_cart' product.id %}">Add to Cart</a>
+        </div>
+    {% endfor %}
+</div>
+
+<style>
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+
+.product-card {
+    position: relative;
+    border: 1px solid #ddd;
+    padding: 10px;
+    background: #fff;
+    border-radius: 6px;
+    text-align: center;
+}
+
+
+.product-card img {
+    width: 100%;
+    height: 200px; 
+    object-fit: contain; 
+    background-color: #fff; 
+    border-radius: 4px;
+}
+
+
+.product-name {
+    display: -webkit-box;
+    -webkit-line-clamp: 2; 
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-height: 40px;
+}
+
+
+.old-price {
+    text-decoration: line-through;
+    color: #999;
+    margin-right: 5px;
+}
+.sale-price {
+    color: red;
+    font-weight: bold;
+}
+
+
+.sale-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: red;
+    color: white;
+    font-size: 12px;
+    padding: 3px 6px;
+    border-radius: 3px;
+}
+</style>
+{% endblock %}
